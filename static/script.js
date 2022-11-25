@@ -1,18 +1,13 @@
-var body = document.body;
-body.addEventListener('keypress', (event) => {
-    if(event.key === 'w') {
-        console.log('Move forward');
-    }
-    else if(event.key === 'a') {
-        console.log('Move left');
-    }
-    else if(event.key === 's') {
-        console.log('Move back');
-    }
-    else if(event.key === 'd') {
-        console.log('Move right');
-    }
-    else {
-        console.log('Stop');
-    }
+document.body.addEventListener('keypress', (event) => {
+    console.log(event.key);
+    changeIcon(event.key);
+    const request = new XMLHttpRequest();
+    request.open('POST', `/ProcessUserinfo/${JSON.stringify(event.key)}`);
+    request.send();
 })
+
+function changeIcon(key) {
+    if(key === 'q') {
+        console.log('q icon');
+    }
+}

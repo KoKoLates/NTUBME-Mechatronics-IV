@@ -1,5 +1,6 @@
 body{
-    background: wheat;
+    background: rgb(244, 230, 205);
     padding: 1%;
-    text-align: center;
+    top: 50%;
+    left: 5%;
 }
