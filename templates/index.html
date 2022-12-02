@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
     <title>Mechtronics Projects</title>
+    <link rel="icon" href="{{url_for('static', filename='images/icon.png')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
 </head>
 <body>
-    <img src="{{url_for('video_feed')}}" width=50%>
+    <div class="video">
+        <img src="{{url_for('video_feed')}}" width=100% />
+        <!-- <img class="complementary" src="{{url_for('complementary_feed')}}" width=35% /> -->
+    </div>
+    <div class="interface">
+        <div class="temperature">
+            <p id="temp">Temperature *c</p>
+        </div>
+
+        <div class="keyboard">
+            <img id="move" src="{{url_for('static', filename='images/default.png')}}" width="100%"/>
+            <img id="plus" src="{{url_for('static', filename='images/release.png')}}" width="30%"/>
+        </div>
+    </div>
     <script src="{{url_for('static', filename='script.js')}}"></script>
 </body>
 </html>

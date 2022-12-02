@@ -1,34 +1,19 @@
 import serial
+import threading
 
-class Interface(object):
-    def __init__(self) -> None:
-        self.ser = serial.Serial('COM3', 9600, timeout=0.1)
-        self.ser.open()
+global ser
 
-        # create a dictionary for mission
-        self.list = {'w': 1, 'd': 2, 'a': 3, 's': 4}
+def open(COM_PORT: str, BAUD_RATES: int, TIME_OUT: float) -> None:
+    global ser 
+    ser = serial.Serial(COM_PORT, BAUD_RATES, timeout=TIME_OUT)
+    if not ser.is_open:
+        ser.open()
+    print('done')
 
-    # def __del__(self) -> None:
-    #     self.ser.close()
-
-    def read(self) -> None:
-        try:
-            response = self.ser.readline().decode().rstrip()
-            print(response)
-        except:
-            print('error')
-
-    def write(self, event: str) -> None:
-        mission = 0
-        if event in self.list:
-            mission = self.list[event]
-
-        self.ser.write(b'%d\n' %mission)
-        print(mission)
-        
-
-
-
-
-
+def write(userinfo: str) -> None:
+    mission = {'ArrowUp': 1, 'ArrowRight': 2, 'ArrowLeft': 3, 'ArrowDown': 4, '+': 5}
+    status = ser.isOpen()
+    if status and (userinfo in mission):
+        ser.write(b'%d\n' %mission[userinfo])
+        print(mission[userinfo])
 

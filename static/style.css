@@ -1,6 +1,34 @@
 body{
-    background: rgb(244, 230, 205);
+    background: rgb(250, 227, 217);
     padding: 1%;
-    top: 50%;
-    left: 5%;
+}
+
+.video {
+    float: left;
+    height: 100%;
+}
+
+.interface{
+    height: 100%;
+    width: 40%;
+    float: right;
+}
+
+.interface .temperature{
+    background: rgba(244, 240, 230, 50);
+    height: 50px;
+    width: 200px;
+    padding: 10%;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.interface .keyboard{
+    padding: 10%;
+    background: rgba(217, 217, 243, 50);
+    border-radius: 20px;
+    height: 100px;
+    width: 200px;
 }
