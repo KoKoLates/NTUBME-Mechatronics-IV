@@ -1,11 +1,11 @@
 import cv2, json
 import interface
-from flask import Flask, Response, jsonify, render_template
+from flask import Flask, Response, render_template
 
 app = Flask(__name__)
 cap = cv2.VideoCapture(0)
 
-def gen_frames() -> None:
+def gen_frames() -> bytes:
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -19,7 +19,7 @@ def gen_frames() -> None:
     cap.release()
     cv2.destroyAllWindows()
 
-def complementary():
+def complementary() -> bytes:
     while True:
         ret, frame = cap.read()
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -40,7 +40,7 @@ def complementary():
     
 @app.route('/')
 def index() -> str:
-    # interface.open('COM3', 9600, 0.1)    
+    interface.open('COM7', 9600, 0.1)    
     return render_template('index.html')
 
 @app.route('/video_feed')
@@ -57,8 +57,7 @@ def complementary_feed() -> Response:
 @app.route('/ProcessUserinfo/<string:userinfo>', methods=['POST'])
 def ProcessUserinfo(userinfo: str):
     userinfo = json.loads(userinfo)
-    # print(userinfo)
-    # interface.write(userinfo)
+    interface.write(userinfo)
     return('/')
 
 if __name__ == '__main__':

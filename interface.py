@@ -11,9 +11,9 @@ def open(COM_PORT: str, BAUD_RATES: int, TIME_OUT: float) -> None:
     print('done')
 
 def write(userinfo: str) -> None:
-    mission = {'ArrowUp': 1, 'ArrowRight': 2, 'ArrowLeft': 3, 'ArrowDown': 4, '+': 5}
+    mission = {'0': 0, 'ArrowUp': 1, 'ArrowRight': 2, 'ArrowLeft': 3, 'ArrowDown': 4, '+': 5}
     status = ser.isOpen()
     if status and (userinfo in mission):
         ser.write(b'%d\n' %mission[userinfo])
-        print(mission[userinfo])
+        # print(mission[userinfo])
 

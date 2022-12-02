@@ -10,6 +10,9 @@ document.body.addEventListener('keydown', (event) => {
 
 document.body.addEventListener('keyup', (event) => {
     document.getElementById("move").src="/static/images/default.png";
+    const request = new XMLHttpRequest();
+    request.open('POST', `/ProcessUserinfo/${JSON.stringify('0')}`);
+    request.send();
 })
 
 function changeKeyImages(key) {
