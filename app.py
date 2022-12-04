@@ -10,7 +10,6 @@ class App:
 
         @self.app.route('/')
         def index():
-            self.interface.open()
             return render_template('index.html')
 
         @self.app.route('/video_feed')
@@ -20,10 +19,11 @@ class App:
         @self.app.route('/ProcessUserinfo/<string:userinfo>', methods=['POST'])
         def ProcessUserinfo(userinfo: str):
             userinfo = json.loads(userinfo)
-            if userinfo == 'c':
+            if userinfo == 'c' or userinfo == 'C':
                 self.complemented = not self.complemented
             else:
-                self.interface.write(userinfo)
+                print(userinfo)
+                # self.interface.write(userinfo)
             return('/')
 
         # @self.app.route('/ProcessSendinfo', methods=['GET', 'POST'])
@@ -33,16 +33,17 @@ class App:
         #     response.content_type = 'application/json'
         #     return response
 
-        @self.app.route('/ProcessSendinfo')
-        def ProcessSendinfo():
-            data = {"data": self.interface.read()}
-            return jsonify(data)
+        # @self.app.route('/ProcessSendinfo')
+        # def ProcessSendinfo():
+        #     data = {"data": self.interface.read()}
+        #     return jsonify(data)
 
     def __del__(self) -> None:
         self.interface.close()
     
-    def run(self):
+    def run(self) -> None:
         self.app.run(debug=True)
+        # self.interface.open()
 
     def gen_frames(self) -> None:
         cap = cv2.VideoCapture(0)
@@ -78,5 +79,4 @@ def main():
     server.run()
 
 if __name__ == '__main__':
-    # app.run(debug=True)
     main()

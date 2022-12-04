@@ -1,20 +1,21 @@
 body{
+    font-size: 20px;
     background: rgb(250, 227, 217);
     padding: 1%;
 }
 
-.video {
+.video_container{
     float: left;
     height: 100%;
 }
 
-.interface{
+.interface_container{
     height: 100%;
     width: 40%;
     float: right;
 }
 
-.interface .temperature{
+.interface_container .temperature{
     background: rgba(244, 240, 230, 50);
     height: 50px;
     width: 200px;
@@ -23,12 +24,14 @@ body{
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    margin: 10px;
 }
 
-.interface .keyboard{
+.interface_container .keyboard{
     padding: 10%;
     background: rgba(217, 217, 243, 50);
     border-radius: 20px;
     height: 100px;
     width: 200px;
+    margin: 10px;
 }

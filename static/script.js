@@ -37,7 +37,7 @@ function getData() {
     fetch('/ProcessSendinfo').then(response => {
         response.json().then((data) => {
             console.log(data)
-            document.getElementById("temp").innerHTML = data.value
+            document.getElementById("temperature_text").innerHTML = data.value
         }) 
     });
 }

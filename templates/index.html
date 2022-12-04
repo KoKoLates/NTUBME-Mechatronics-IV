@@ -4,14 +4,15 @@
     <title>Mechtronics Projects</title>
     <link rel="icon" href="{{url_for('static', filename='images/icon.png')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+    <link rel="stylesheet" href="../static/style.css" />
 </head>
 <body>
-    <div class="video">
-        <img src="{{url_for('video_feed')}}" width=100% />
+    <div class="video_container">
+        <img id="video_stream" src="{{url_for('video_feed')}}" />
     </div>
-    <div class="interface">
+    <div class="interface_container">
         <div class="temperature">
-            <p id="temp">Temperature *c</p>
+            <p id="temperature_text">Temperature *c</p>
         </div>
 
         <div class="keyboard">

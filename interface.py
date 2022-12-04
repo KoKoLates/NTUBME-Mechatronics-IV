@@ -1,5 +1,4 @@
 import serial
-import threading
 
 class Interface:
     def __init__(self, COM_PORT: str, BAUD_RATES: int, TIME_OUT: float) -> None:
@@ -14,10 +13,10 @@ class Interface:
             self.ser = serial.Serial(self.port, self.baud, timeout=self.timeout)
             self.ser.flush()
         except Exception as ex:
-            self.log.error('Open com fail:{}/{}'.format(self.port,self.baud))
-            self.log.error('Exception:{}'.format(ex))
+            print('[ERROR] Open port fail:{}/{}'.format(self.port, self.baud))
+            print('[ERROR] Exception:{}'.format(ex))
     
-    def opened(self) -> None:
+    def open_check(self) -> None:
         if self.ser is None:
             self.open()
 
@@ -26,13 +25,13 @@ class Interface:
             self.ser.close()
 
     def write(self, userinfo: str) -> None:
-        self.opened()
+        self.open_check()
         if self.ser.isOpen() and (userinfo in self.mission):
             self.ser.write(b'%d\n' %self.mission[userinfo])
             # print(self.mission[userinfo])
 
     def read(self) -> list:
-        self.opened()
+        self.open_check()
         data = self.ser.readline()
         decoded_values = str(data[0:len(data)].decode('utf-8'))
         # values = decoded_values.split(',')
