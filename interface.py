@@ -40,5 +40,6 @@ class Interface:
         #     messages.append(float(item))
 
         # return messages
+        self.ser.flushInput()
         return decoded_values
         

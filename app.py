@@ -1,12 +1,12 @@
 import cv2, json
 import interface
-from flask import Flask, Response, render_template, jsonify
+from flask import Flask, Response, render_template, jsonify, request
 
 class App:
     def __init__(self, name) -> None:
         self.app: Flask = Flask(name)
         self.complemented: bool = False
-        self.interface = interface.Interface('COM3', 9600, 0.1)
+        self.interface = interface.Interface('COM3', 115200, 0.1)
 
         @self.app.route('/')
         def index():
@@ -23,27 +23,21 @@ class App:
                 self.complemented = not self.complemented
             else:
                 print(userinfo)
-                # self.interface.write(userinfo)
+                self.interface.write(userinfo)
             return('/')
 
-        # @self.app.route('/ProcessSendinfo', methods=['GET', 'POST'])
-        # def ProcessSendinfo():
-        #     data = [time(), self.interface.read()]
-        #     response = make_response(json.dumps(data))
-        #     response.content_type = 'application/json'
-        #     return response
-
-        # @self.app.route('/ProcessSendinfo')
-        # def ProcessSendinfo():
-        #     data = {"data": self.interface.read()}
-        #     return jsonify(data)
+        @self.app.route('/ProcessSendinfo', methods=['GET'])
+        def ProcessSendinfo():
+            value = (self.interface.read()).replace("\r\n", "")
+            data = {"data": str(value)}
+            return jsonify(data)
 
     def __del__(self) -> None:
         self.interface.close()
     
     def run(self) -> None:
         self.app.run(debug=True)
-        # self.interface.open()
+        self.interface.open()
 
     def gen_frames(self) -> None:
         cap = cv2.VideoCapture(0)
