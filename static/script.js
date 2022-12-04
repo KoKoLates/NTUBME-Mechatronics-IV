@@ -1,4 +1,5 @@
 let grabbed = false;
+let complemented = false;
 
 document.body.addEventListener('keydown', (event) => {
     console.log(event.key);
@@ -15,8 +16,7 @@ document.body.addEventListener('keyup', (event) => {
 function changeKeyImages(key) {
     let plus = document.getElementById("plus");
     let move = document.getElementById("move");
-    let buttonImg = document.getElementById("complement_button");
-    let buttonSel = document.querySelector('#complement_button');
+    let comp = document.getElementById("complemented");
     if(key === 'ArrowUp') {
         move.src="/static/images/up.png";
     }
@@ -33,15 +33,18 @@ function changeKeyImages(key) {
         grabbed ? ((plus.src="/static/images/release.png"), grabbed = false) :
         ((plus.src="/static/images/grab.png"), grabbed = true);
     }
+    else if(key === 'c' || key === 'C') {
+        complemented ? ((comp.src="/static/images/sunUnpress.png"), complemented = false) :
+        ((comp.src="/static/images/sunPress.png"), complemented = true);
+    }
 }
 
 function recieveSendInfo() {
     fetch('/ProcessSendinfo').then((response) => {
         let text = document.getElementById("temperature_text");
         response.json().then((data) => {
-            data['data'] == "" ? text.innerHTML = "--" : text.innerHTML = data['data'];
-        }) 
+            data['data'] == "" ? text.innerHTML = "--" : text.innerHTML = data['data'];}) 
     });
 }
 
-setInterval(recieveSendInfo, 1500);
+setInterval(recieveSendInfo, 1000);

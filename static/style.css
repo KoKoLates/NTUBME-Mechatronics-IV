@@ -1,11 +1,13 @@
 body{
     font-size: 20px;
     background: rgb(250, 227, 217);
-    padding: 50px 20px 50px 20px;
+    padding: 30px 20px 30px 20px;
 }
 
 .video_container{
     float: left;
+    display: flex;
+    flex-direction: column;
     width: 60%;
     height: 100%;
     text-align: center;
@@ -14,6 +16,14 @@ body{
 #video_stream{
     width: 80%;
     padding: 20px;
+}
+
+#complemented{
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 35px;
+    margin: 15px;
 }
 
 

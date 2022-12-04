@@ -11,7 +11,6 @@ class Interface:
     def open(self) -> None:
         try:
             self.ser = serial.Serial(self.port, self.baud, timeout=self.timeout)
-            self.ser.flush()
         except Exception as ex:
             print('[ERROR] Open port fail:{}/{}'.format(self.port, self.baud))
             print('[ERROR] Exception:{}'.format(ex))
@@ -33,13 +32,12 @@ class Interface:
     def read(self) -> list:
         self.open_check()
         data = self.ser.readline()
-        decoded_values = str(data[0:len(data)].decode('utf-8'))
+        decoded_values = str(data[0:len(data)].decode('utf-8')).replace('\r\n', '')
         # values = decoded_values.split(',')
         # messages = []
         # for item in values:
         #     messages.append(float(item))
 
         # return messages
-        self.ser.flushInput()
+        # self.ser.flushInput()
         return decoded_values
-        
