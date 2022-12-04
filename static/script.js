@@ -10,9 +10,6 @@ document.body.addEventListener('keydown', (event) => {
 
 document.body.addEventListener('keyup', (event) => {
     document.getElementById("move").src="/static/images/default.png";
-    const request = new XMLHttpRequest();
-    request.open('POST', `/ProcessUserinfo/${JSON.stringify('0')}`);
-    request.send();
 })
 
 function changeKeyImages(key) {
@@ -36,6 +33,13 @@ function changeKeyImages(key) {
     }
 }
 
-function replaceInText(text) {
-    document.getElementById("temp").innerHTML=text;
+function getData() {
+    fetch('/ProcessSendinfo').then(response => {
+        response.json().then((data) => {
+            console.log(data)
+            document.getElementById("temp").innerHTML = data.value
+        }) 
+    });
 }
+
+setInterval(getData, 2000);
