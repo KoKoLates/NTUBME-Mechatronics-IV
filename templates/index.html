@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8"/>
     <title>Mechtronics Projects</title>
     <link rel="icon" href="{{url_for('static', filename='images/icon.png')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
     <link rel="stylesheet" href="../static/style.css" />
 </head>
 <body>
+    <!-- < The video stream and complemented parts > -->
     <div class="video_container">
         <img id="video_stream" src="{{url_for('video_feed')}}" />
-        <img id="complemented" src="{{url_for('static', filename='images/sunUnpress.png')}}" />
+        <div class="button_bar">
+            <img id="complemented" src="{{url_for('static', filename='images/sunUnpress.png')}}" />
+        </div>
     </div>
+
+    <!-- < The control interface parts > -->
     <div class="interface_container">
         <div class="temperature">
             <p id="temperature_text">--</p>
         </div>
-
         <div class="keyboard">
-            <img id="move" src="{{url_for('static', filename='images/default.png')}}" width="100%"/>
-            <img id="plus" src="{{url_for('static', filename='images/release.png')}}" width="30%"/>
+            <img id="move" src="{{url_for('static', filename='images/default.png')}}" />
+            <img id="plus" src="{{url_for('static', filename='images/release.png')}}" />
         </div>
     </div>
     <script src="{{url_for('static', filename='script.js')}}"></script>
