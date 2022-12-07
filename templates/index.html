@@ -18,12 +18,22 @@
 
     <!-- < The control interface parts > -->
     <div class="interface_container">
-        <div class="temperature">
-            <p id="temperature_text">--</p>
-        </div>
+        <div><p class="subtitle">TEMPERATURE</p></div>
+        <div class="temperature"><p id="temperature_text">--</p></div>
+        <div><p class="subtitle">KEYBOARD CONTROL</p></div>
         <div class="keyboard">
-            <img id="move" src="{{url_for('static', filename='images/default.png')}}" />
-            <img id="plus" src="{{url_for('static', filename='images/release.png')}}" />
+            <div class="move"><img id="move" src="{{url_for('static', filename='images/default.png')}}" /></div>
+            <div class="plus">
+                <img id="plus" src="{{url_for('static', filename='images/release.png')}}" />
+                <p id="plus_text">RELEASE</p>
+            </div>
+        </div>
+        <div><p class="subtitle">COLLISION STATUS</p></div>
+        <div class="car">
+            <img id="car_image" src="{{url_for('static', filename='images/carDefault.png')}}" />
+            <div class="car_text">
+                <p id="car_text">--</p>
+            </div>
         </div>
     </div>
     <script src="{{url_for('static', filename='script.js')}}"></script>

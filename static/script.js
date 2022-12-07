@@ -2,7 +2,6 @@ let grabbed = false;
 let complemented = false;
 
 document.body.addEventListener('keydown', (event) => {
-    console.log(event.key);
     changeKeyImages(event.key);
     const request = new XMLHttpRequest();
     request.open('POST', `/ProcessUserinfo/${JSON.stringify(event.key)}`);
@@ -11,12 +10,19 @@ document.body.addEventListener('keydown', (event) => {
 
 document.body.addEventListener('keyup', (event) => {
     document.getElementById("move").src="/static/images/default.png";
+    if(event.key === 'ArrowUp' || event.key === 'ArrowLeft' || 
+        event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+        const request = new XMLHttpRequest();
+        request.open('POST', `/ProcessUserinfo/${JSON.stringify('Stop')}`);
+        request.send();
+    }
 })
 
 function changeKeyImages(key) {
     let plus = document.getElementById("plus");
     let move = document.getElementById("move");
     let comp = document.getElementById("complemented");
+    let plusText = document.getElementById("plus_text");
     if(key === 'ArrowUp') {
         move.src="/static/images/up.png";
     }
@@ -30,8 +36,12 @@ function changeKeyImages(key) {
         move.src="/static/images/right.png";
     }
     else if(key === '+') {
-        grabbed ? ((plus.src="/static/images/release.png"), grabbed = false) :
-        ((plus.src="/static/images/grab.png"), grabbed = true);
+        grabbed ? ((plus.src="/static/images/release.png"), 
+                    grabbed = false, 
+                    plusText.textContent = "RELEASE") :
+                  ((plus.src="/static/images/grab.png"), 
+                    grabbed = true, 
+                    plusText.textContent = "GRABBED");
     }
     else if(key === 'c' || key === 'C') {
         complemented ? ((comp.src="/static/images/sunUnpress.png"), complemented = false) :
@@ -41,10 +51,32 @@ function changeKeyImages(key) {
 
 function recieveSendInfo() {
     fetch('/ProcessSendinfo').then((response) => {
-        let text = document.getElementById("temperature_text");
         response.json().then((data) => {
-            data['data'] == "" ? text.innerHTML = "--" : text.innerHTML = data['data'];}) 
+            changeTempText(data['TEMP']);
+            distanceTo(data['DISTL'], data['DISTR']);
+        }) 
     });
 }
 
-setInterval(recieveSendInfo, 1000);
+function changeTempText(tempText) {
+    let text = document.getElementById("temperature_text");
+    tempText == "" ? text.innerHTML = "--" : text.innerHTML = tempText + " &degC";
+}
+
+function distanceTo(left, right) {
+    var leftDist = parseInt(left);
+    var rightDist = parseInt(right);
+    let carImg = document.getElementById("car_image");
+    let carText = document.getElementById("car_text");
+    if(leftDist <= 5) {
+        (rightDist <= 5) ? (carImg.src="/static/images/carBoth.png") :
+        (carImg.src="/static/images/carLeft.png");
+    }
+    else {
+        (rightDist <= 5) ? (carImg.src="/static/images/carRight.png") :
+        (carImg.src="/static/images/carDefault.png");
+    }
+    carText.textContent = leftDist + " cm || " + rightDist + " cm";
+}
+
+setInterval(recieveSendInfo, 500);

@@ -27,7 +27,11 @@ class App:
         @self.app.route('/ProcessSendinfo', methods=['GET'])
         def ProcessSendinfo():
             value = self.interface.read()
-            data = {"data": str(value)}
+            if len(value) != 3:
+                data = {"TEMP": "", "DISTL": "", "DISTR": ""}
+            else:
+                data = {"TEMP": value[0], "DISTL": value[1], "DISTR": value[2]}
+            
             return jsonify(data)
     
     def run(self) -> None:
@@ -42,7 +46,8 @@ class App:
             if not ret:
                 break
             elif self.complemented:
-                frame = self.complementary_effect(frame)
+                # frame = self.complementary_effect(frame)
+                frame = 255 - frame
             
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
