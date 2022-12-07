@@ -23,7 +23,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    margin: 10px;
 }
 
 .video_container #video_stream {
