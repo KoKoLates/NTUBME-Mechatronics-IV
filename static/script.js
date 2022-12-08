@@ -68,12 +68,12 @@ function distanceTo(left, right) {
     var rightDist = parseInt(right);
     let carImg = document.getElementById("car_image");
     let carText = document.getElementById("car_text");
-    if(leftDist <= 30) {
-        (rightDist <= 30) ? (carImg.src="/static/images/carBoth.png") :
+    if(leftDist <= 25) {
+        (rightDist <= 25) ? (carImg.src="/static/images/carBoth.png") :
         (carImg.src="/static/images/carLeft.png");
     }
     else {
-        (rightDist <= 30) ? (carImg.src="/static/images/carRight.png") :
+        (rightDist <= 25) ? (carImg.src="/static/images/carRight.png") :
         (carImg.src="/static/images/carDefault.png");
     }
 

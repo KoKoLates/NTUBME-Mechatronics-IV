@@ -46,7 +46,6 @@ class App:
             if not ret:
                 break
             elif self.complemented:
-                # frame = self.complementary_effect(frame)
                 frame = 255 - frame
             
             ret, buffer = cv2.imencode('.jpg', frame)
@@ -55,17 +54,6 @@ class App:
     
         cap.release()
         cv2.destroyAllWindows()
-    
-    def complementary_effect(self, frame: cv2.Mat) -> cv2.Mat:
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        # Mask for four color
-        maskR = cv2.inRange(hsv, ( 0, 50, 70), ( 9, 255, 255))
-        maskG = cv2.inRange(hsv, (36, 50, 70), (89, 255, 255))
-        maskB = cv2.inRange(hsv, (25, 50, 70), (130,255, 255))
-        maskY = cv2.inRange(hsv, (110,50, 50), (130,255, 255))
-        mask = cv2.bitwise_or(cv2.bitwise_or(cv2.bitwise_or(maskG, maskY), maskR), maskB)
-        imgs = cv2.bitwise_and(frame, frame, mask)
-        return 255 -imgs
 
 def main():
     server = App(__name__)
