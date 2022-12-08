@@ -1,12 +1,29 @@
+#include "DHT.h"
+#include <ServoTimer2.h>
+
+// Global Variable parts
 bool grabFlag = false;
 const int motorPin[4] = {4, 5, 6, 7};
 // 0: stop, 1: forward, 2: right, 3: left, 4: backward
 const int motorSpeed[5][2] = {{0, 0}, {100, 100}, {100, 0},
                               {0, 100}, {-100, -100}};
 
+// Object declaration parts
+ServoTimer2 gripper;
+DHT dht11(13, DHT11); 
+
+// Sensor Values
+float temperature = 0.0;
+unsigned int leftDist = 0, rightDist = 0;
+
 void setup() {
   Serial.begin(9600);
   for(int i=0; i < 4; i++) pinMode(motorPin[i], OUTPUT);
+  gripper.attach(10);
+  gripper.write(angleToPulse(155));
+  dht11.begin();
+
+  // Timer initialize
   timerInit();  
 }
 
@@ -24,13 +41,10 @@ void loop() {
       analogWrite(motorPin[1], 255 + motorSpeed[str.toInt()][0]);
       analogWrite(motorPin[2], 255 +  motorSpeed[str.toInt()][1]);
     } else if(str == "5") {
-      grabServo();
+      grabFlag ? gripper.write(angleToPulse(155)) : gripper.write(angleToPulse(90));
+      grabFlag = !grabFlag;
     }
   } 
-}
-
-void grabServo(){
-  grabFlag = !grabFlag;
 }
 
 void timerInit(){
@@ -52,4 +66,8 @@ ISR(TIMER1_COMPA_vect){
 //  String str = "temperature, distance Left, distance right"
 //  String str = String(count) + "," + String(count + 1) + "," + String(count - 1);
   Serial.println(str);
+}
+
+int angleToPulse(int angle) {
+  return map(angle, 0, 180, 750, 2250);
 }

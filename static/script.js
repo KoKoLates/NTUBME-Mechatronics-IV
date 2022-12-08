@@ -76,7 +76,15 @@ function distanceTo(left, right) {
         (rightDist <= 5) ? (carImg.src="/static/images/carRight.png") :
         (carImg.src="/static/images/carDefault.png");
     }
-    carText.textContent = leftDist + " cm || " + rightDist + " cm";
+
+    if(leftDist < 100) {
+        (rightDist < 100) ? carText.textContent = `0${leftDist} cm || 0${rightDist} cm` :
+        carText.textContent = `0${leftDist} cm || ${rightDist} cm`;
+    }
+    else {
+        (rightDist < 100) ? carText.textContent = `${leftDist} cm || 0${rightDist} cm` :
+        carText.textContent = `${leftDist} cm || ${rightDist} cm`;
+    }
 }
 
 setInterval(recieveSendInfo, 500);
