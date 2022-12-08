@@ -68,21 +68,21 @@ function distanceTo(left, right) {
     var rightDist = parseInt(right);
     let carImg = document.getElementById("car_image");
     let carText = document.getElementById("car_text");
-    if(leftDist <= 5) {
-        (rightDist <= 5) ? (carImg.src="/static/images/carBoth.png") :
+    if(leftDist <= 30) {
+        (rightDist <= 30) ? (carImg.src="/static/images/carBoth.png") :
         (carImg.src="/static/images/carLeft.png");
     }
     else {
-        (rightDist <= 5) ? (carImg.src="/static/images/carRight.png") :
+        (rightDist <= 30) ? (carImg.src="/static/images/carRight.png") :
         (carImg.src="/static/images/carDefault.png");
     }
 
-    if(leftDist < 100) {
-        (rightDist < 100) ? carText.textContent = `0${leftDist} cm || 0${rightDist} cm` :
+    if(leftDist < 10) {
+        (rightDist < 10) ? carText.textContent = `0${leftDist} cm || 0${rightDist} cm` :
         carText.textContent = `0${leftDist} cm || ${rightDist} cm`;
     }
     else {
-        (rightDist < 100) ? carText.textContent = `${leftDist} cm || 0${rightDist} cm` :
+        (rightDist < 10) ? carText.textContent = `${leftDist} cm || 0${rightDist} cm` :
         carText.textContent = `${leftDist} cm || ${rightDist} cm`;
     }
 }

@@ -6,10 +6,10 @@ bool grabFlag = false;
 bool buzzFlag = false;
 const int maxDistance = 200;
 const int motorPin[4] = {4, 5, 6, 7};
-const int ultroPin[4] = {2, 3, 8, 9};
+const int ultraPin[4] = {2, 3, 8, 9};
 // 0: stop, 1: forward, 2: right, 3: left, 4: backward
-const int motorSpeed[5][2] = {{0, 0}, {80, 80}, {80, 0},
-                              {0, 80}, {-80, -80}};
+const int motorSpeed[5][2] = {{0, 0}, {100, 90}, {100, 0},
+                              {0, 140}, {-100, -90}};
 
 // Object declaration parts
 ServoTimer2 gripper;
@@ -26,10 +26,10 @@ void setup() {
   gripper.write(angleToPulse(180));
   dht11.begin();
 
-  pinMode(ultroPin[0], OUTPUT);
-  pinMode(ultroPin[2], OUTPUT);
-  pinMode(ultroPin[1], INPUT);
-  pinMode(ultroPin[3], INPUT);
+  pinMode(ultraPin[0], OUTPUT);
+  pinMode(ultraPin[2], OUTPUT);
+  pinMode(ultraPin[1], INPUT);
+  pinMode(ultraPin[3], INPUT);
   // Timer initialize
   timerInit();  
 }
@@ -42,21 +42,21 @@ void loop() {
       digitalWrite(motorPin[3], LOW);
       analogWrite(motorPin[1], motorSpeed[str.toInt()][0]);
       analogWrite(motorPin[2], motorSpeed[str.toInt()][1]);
-      delayMicroseconds(10);
-    } else if(str == "4") {
+    }
+    else if(str == "4") {
       digitalWrite(motorPin[0], HIGH);
       digitalWrite(motorPin[3], HIGH);
       analogWrite(motorPin[1], 255 + motorSpeed[str.toInt()][0]);
       analogWrite(motorPin[2], 255 +  motorSpeed[str.toInt()][1]);
-      delayMicroseconds(10);
-    } else if(str == "5") {
+    } 
+    else if(str == "5") {
       grabFlag ? gripper.write(angleToPulse(180)) : gripper.write(angleToPulse(90));
       grabFlag = !grabFlag;
     }
   }
   temperature = getTemperature();
-  leftDist = getDistance(ultroPin[0], ultroPin[1]);
-  rightDist = getDistance(ultroPin[2], ultroPin[3]);
+  leftDist = getDistance(ultraPin[0], ultraPin[1]);
+  rightDist = getDistance(ultraPin[2], ultraPin[3]);
 }
 
 void timerInit(){
@@ -103,14 +103,15 @@ unsigned int getDistance(int trig, int echo) {
     buzzerStop();
   }
 
-  if(distances > 200){
-    distances = 200;
+  if(distances > 100){
+    distances = 100;
   }
   return distances;
 }
 
 void buzzerRing(){
 //  tone(11, 1000);
+  myTone(11, 1000, 100);
   buzzFlag = true;
   
 }
@@ -118,4 +119,18 @@ void buzzerRing(){
 void buzzerStop() {
 //  noTone(11);
   buzzFlag = false;
+}
+
+void myTone(int pin, uint16_t frequency, uint16_t duration) {
+  unsigned long startTime = millis();
+  unsigned long halfPeriod= 1000000L/ (frequency * 2);
+  pinMode(pin,OUTPUT);
+  while (millis() - startTime < duration)
+  {
+    digitalWrite(pin,HIGH);
+    delayMicroseconds(halfPeriod);
+    digitalWrite(pin,LOW);
+    delayMicroseconds(halfPeriod);
+  }
+  pinMode(pin,INPUT);
 }
