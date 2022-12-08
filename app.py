@@ -5,7 +5,7 @@ class App:
     def __init__(self, name) -> None:
         self.app: Flask = Flask(name)
         self.complemented: bool = False
-        self.interface = interface.Interface('COM3', 9600, 0.1)
+        self.interface = interface.Interface('COM10', 9600, 0.1)
 
         @self.app.route('/')
         def index():
