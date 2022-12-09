@@ -7,8 +7,8 @@ bool grabFlag = false;
 const int maxDistance = 200;
 const int motorPin[4] = {4, 5, 6, 7};
 const int ultraPin[4] = {2, 3, 8, 9};
-const int motorSpeed[5][2] = {{0, 0}, {120, 110}, {120, -120},
-                              {-120, 120}, {-120, -110}};
+const int motorSpeed[5][2] = {{0, 0}, {120, 110}, {100, -100},
+                              {-100, 100}, {-120, -110}};
 
 // Object declaration parts
 ServoTimer2 gripper;
@@ -24,6 +24,7 @@ void setup() {
   Serial.begin(9600);
   // Motor initialize
   for(int i=0; i < 4; i++) pinMode(motorPin[i], OUTPUT);
+
   // Servo initialize
   gripper.attach(10);
   gripper.write(angleToPulse(180));
@@ -31,6 +32,7 @@ void setup() {
   left.init();
   right.init();
   dht11.begin();
+
   // Timer initialize
   timerInit();  
 }
@@ -64,10 +66,11 @@ void loop() {
       analogWrite(motorPin[2], 255 +  motorSpeed[str.toInt()][1]);
     } 
     else if(str == "5") {
-      grabFlag ? gripper.write(angleToPulse(180)) : gripper.write(angleToPulse(120));
+      grabFlag ? gripper.write(angleToPulse(180)) : gripper.write(angleToPulse(90));
       grabFlag = !grabFlag;
     }
   }
+  // update the sensor values
   temperature = getTemperature();
   leftDist = left.getDistance();
   rightDist = right.getDistance();
@@ -99,6 +102,7 @@ float getTemperature() {
   else return temp;
 }
 
+// Got the indicate pulse width of angle.
 int angleToPulse(int angle) {
   return map(angle, 0, 180, 750, 2250);
 }

@@ -11,6 +11,7 @@ void Ultrasonic::init(){
   pinMode(echoPin, INPUT);
 }
 
+// Self-defined tone for buzzer
 void Ultrasonic::Tone(uint16_t frequency, uint16_t duration){
   unsigned long startTime = millis();
   unsigned long halfPeriod = 1000000L / (frequency * 2);
@@ -36,7 +37,7 @@ unsigned int Ultrasonic::getDistance(){
     distances = 100;
   }
   if(distances <= 10) {
-    Tone(1000, 100);
+   Tone(1000, 100);
   }
   return distances;
 }
