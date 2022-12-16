@@ -44,7 +44,6 @@ class Interface:
         """
         Write the data (command) to the controller
         Parameter
-        ---------
             userinfo(str): the command of indicate mission
         """
         self.open_check()
@@ -54,8 +53,7 @@ class Interface:
     def read(self) -> list:
         """
         Read the serial port update by controller that include sensor data
-        Return
-        -------
+        Returns
             messages(list): the sensor data that update by controller.
         """
         self.open_check()
@@ -68,4 +66,3 @@ class Interface:
 
         self.ser.flushInput()       
         return messages
-        # return decoded_values

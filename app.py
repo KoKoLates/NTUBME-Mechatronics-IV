@@ -17,8 +17,7 @@ class App:
         def index():
             """
             Index of home pages
-            Return
-            -------
+            Returns:
                 render_template: Render a template by name with the given context.
             """
             return render_template('index.html')
@@ -28,8 +27,7 @@ class App:
             """
             The function update the video frame to indicate url
             and update frequently to let it look like video stream
-            Return
-            -------
+            Returns
                 Response: The response object that is used by default in Flask
             """
             return Response(self.gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -40,11 +38,8 @@ class App:
             The function to sending command that recieve from user (frontend)
             to the controller through the serial interface.
             Parameters
-            ----------
                 userinfo(str): the control command
-
-            Return
-            -------
+            Returns
                 index: the home page index
             """
             userinfo = json.loads(userinfo)
@@ -58,9 +53,8 @@ class App:
         def ProcessSendinfo():
             """
             The function to sending data to frontend by JSON type.
-            Return
-            -------
-                data: the jsonify data 
+            Returns
+                data(json): the jsonify data of each data from arduino. 
             """
             value = self.interface.read()
             if len(value) != 3:
@@ -74,7 +68,6 @@ class App:
         """
         Running the backend side server.
         Parameters
-        ----------
             host(str): The address string of host. 
         """
         self.app.run(debug=True, host=host)
