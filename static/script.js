@@ -1,4 +1,4 @@
-/*
+/**
 * Date: 2022-12-08
 * Author: Po-Ting Ko 
 */
@@ -6,7 +6,7 @@
 let grabbed = false;
 let complemented = false;
 
-/*
+/**
 * Event Listener for listen to the key down events
 * Send the key values to the backend and execute corresponding movements
 */
@@ -17,7 +17,7 @@ document.body.addEventListener('keydown', (event) => {
     request.send();
 })
 
-/*
+/**
 * Event Listener for listen to the key up events
 * Send the stop command to backend and let the robot stop after previous command
 */
@@ -31,7 +31,7 @@ document.body.addEventListener('keyup', (event) => {
     }
 })
 
-/*
+/**
 * Corresponding to the key, change the style or effetcs
 * @param key the event key of the keyboard being preesed
 */
@@ -68,7 +68,7 @@ function changeKeyImages(key/*str*/) {
     }
 }
 
-/*
+/**
 * Recieve the info sending from backend and divide into different function 
 * to execuate corresponding mission.
 */
@@ -81,7 +81,7 @@ function recieveSendInfo() {
     });
 }
 
-/*
+/**
 * The function to change the word content of temperature
 * @param tempText the string text of current temperature
 */
@@ -90,7 +90,7 @@ function changeTempText(tempText/*str*/) {
     tempText == "" ? text.innerHTML = "--" : text.innerHTML = tempText + " &degC";
 }
 
-/* 
+/**
 * Accorsing to the distance data sending from the backend side.
 * The function try to execuate indicate mission on icon, text and warning.
 * @param left the left side distance
